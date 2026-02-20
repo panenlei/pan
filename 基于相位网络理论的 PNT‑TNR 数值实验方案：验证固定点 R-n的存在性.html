@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<base href="https://chat.deepseek.com/a/chat/s/30e05c10-36e0-4e1b-abb5-0bdf10cfb165">
+<title>欧拉公式与爱因斯坦方程结合推导 - DeepSeek</title>
+
+<style>
+  :root {
+    --primary-color: #2563eb;
+    --text-main: #1e293b;
+    --text-secondary: #475569;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-code: #f1f5f9;
+    --border-light: #e2e8f0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    height: auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  .c2f-export-page {
+    width: 100%;
+    max-width: 850px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 48px 56px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255,255,255,0.5);
+    flex-shrink: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+  .c2f-export-page-inner,
+  .global-export-content,
+  .c2f-export-global-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .exported-message {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  .message-separator {
+    display: none;
+  }
+
+  .exported-message--user {
+    margin-bottom: 40px !important;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .exported-message--user .message-content,
+  .exported-message--user .ds-markdown,
+  .exported-message--user .ds-message,
+  .exported-message--user .c2f-msg-body,
+  .exported-message--user [data-c2f-role="user"] .c2f-msg-body {
+    background-color: #f0f4f8 !important;
+    color: #1e293b !important;
+    border-radius: 18px 18px 4px 18px !important;
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    max-width: 100%;
+    width: auto !important;
+    white-space: pre-wrap;
+  }
+
+  .exported-message--user .c2f-msg {
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .exported-message--user .message-content *,
+  .exported-message--user .ds-markdown *,
+  .exported-message--user .ds-message *,
+  .exported-message--user .c2f-msg-body *,
+  .exported-message--user [data-c2f-role="user"] .c2f-msg-body * {
+    color: #1e293b !important;
+  }
+
+  .exported-message--ai {
+    width: 100%;
+  }
+
+  .exported-message--ai .ds-markdown,
+  .exported-message--ai .message-content {
+    font-size: 16px;
+    color: var(--text-main);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+  }
+
+  h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background: var(--primary-color);
+    margin-right: 10px;
+    border-radius: 2px;
+  }
+
+  p {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+
+  pre {
+    margin: 16px 0;
+    padding: 12px 14px;
+    background: var(--bg-code);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .md-code-block {
+    background: var(--bg-code) !important;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  .md-code-block pre {
+    margin: 0 !important;
+    padding: 16px 20px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-x: auto;
+  }
+
+  code, pre code {
+    font-family: "JetBrains Mono", "Fira Code", Consolas, Menlo, Monaco, "Courier New", monospace;
+    background: transparent !important;
+    padding: 0;
+    color: #334155;
+  }
+
+  .token.comment { color: #94a3b8; font-style: italic; }
+  .token.string { color: #16a34a; }
+  .token.keyword { color: #7c3aed; font-weight: 600; }
+  .token.function { color: #2563eb; }
+  .token.number { color: #db2777; }
+
+  p code, li code {
+    background-color: #f1f5f9;
+    color: #e11d48;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    border: 1px solid #e2e8f0;
+    font-family: inherit;
+  }
+
+  ul, ol {
+    margin: 16px 0;
+    padding-left: 24px;
+    color: var(--text-secondary);
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 16px 0;
+    table-layout: auto;
+  }
+
+  table thead, table tbody, table tfoot, table tr {
+    display: table-row-group;
+  }
+
+  table tr {
+    display: table-row;
+  }
+
+  table th, table td {
+    display: table-cell;
+    border: 1px solid var(--border-light);
+    padding: 10px 12px;
+    vertical-align: top;
+    text-align: left;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  table th {
+    background: #f1f5f9;
+    font-weight: 700;
+    color: var(--text-main);
+    word-break: keep-all;
+    overflow-wrap: normal;
+  }
+
+  table td {
+    color: var(--text-secondary);
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 10px 14px;
+    border-left: 4px solid var(--border-light);
+    background: #f8fafc;
+    border-radius: 6px;
+    color: #64748b;
+  }
+
+  blockquote p {
+    color: #64748b !important;
+  }
+
+  /* 思考过程折叠/展开 */
+  .c2f-thinking-wrapper {
+    margin: 24px 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .c2f-thinking-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(to right, #f8fafc, #f1f5f9);
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .c2f-thinking-header:hover {
+    background: linear-gradient(to right, #f1f5f9, #e2e8f0);
+  }
+
+  .c2f-thinking-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .c2f-thinking-icon {
+    width: 20px;
+    height: 20px;
+    color: #64748b;
+    flex-shrink: 0;
+  }
+
+  .c2f-thinking-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    letter-spacing: 0.3px;
+  }
+
+  .c2f-thinking-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+    transition: color 0.2s ease;
+  }
+
+  .c2f-thinking-header:hover .c2f-thinking-toggle {
+    color: #64748b;
+  }
+
+  .c2f-thinking-toggle-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .c2f-thinking-wrapper.collapsed .c2f-thinking-toggle-icon {
+    transform: rotate(-90deg);
+  }
+
+  .c2f-thinking-content {
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+    opacity: 1;
+    padding: 20px;
+    max-height: none;
+  }
+
+  .c2f-thinking-wrapper.collapsed .c2f-thinking-content {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 20px;
+  }
+
+  .c2f-thinking-wrapper.collapsed .c2f-thinking-header {
+    border-bottom-color: transparent;
+  }
+
+  .c2f-thinking-content .ds-markdown {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.7;
+  }
+
+  .c2f-thinking-content .ds-markdown p {
+    margin-bottom: 12px;
+    color: #64748b;
+  }
+
+  .c2f-thinking-content .ds-markdown h1,
+  .c2f-thinking-content .ds-markdown h2,
+  .c2f-thinking-content .ds-markdown h3,
+  .c2f-thinking-content .ds-markdown h4 {
+    color: #475569;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 1em;
+  }
+
+  /* 大纲导航 */
+  .c2f-toc-container {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-height: 80vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    max-width: 220px;
+    z-index: 1000;
+  }
+
+  .c2f-toc-container:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .c2f-toc-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .c2f-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .c2f-toc-item {
+    margin-bottom: 6px;
+  }
+
+  .c2f-toc-link {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+
+  .c2f-toc-link:hover {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.06);
+    border-left-color: var(--primary-color);
+  }
+
+  .c2f-toc-link.active {
+    color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.08);
+    border-left-color: var(--primary-color);
+    font-weight: 500;
+  }
+
+  .c2f-toc-item-h2 .c2f-toc-link {
+    padding-left: 8px;
+  }
+
+  .c2f-toc-item-h3 .c2f-toc-link {
+    padding-left: 20px;
+    font-size: 12px;
+  }
+
+  .c2f-toc-item-h4 .c2f-toc-link {
+    padding-left: 32px;
+    font-size: 11px;
+  }
+
+  /* 隐藏滚动条但保持功能 */
+  .c2f-toc-container::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .c2f-toc-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .c2f-toc-container::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 2px;
+  }
+
+  .c2f-toc-container:hover::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.5);
+  }
+
+  .c2f-export-footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--border-light);
+    font-size: 13px;
+    color: #94a3b8;
+    text-align: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    width: 100%;
+  }
+
+  /* KaTeX / 数学公式基础展示：保留原有 MathML/KaTeX 结构，但给出合理的对齐与间距 */
+  .katex, .katex-display, .ds-markdown-math {
+    font-size: 1.02em;
+  }
+  .katex-display, .ds-markdown-math {
+    margin: 12px auto;
+    text-align: center;
+  }
+  .katex-mathml {
+    display: inline-block;
+  }
+  .katex-html {
+    display: none !important;
+  }
+  /* Notebook / 其他面板类容器在导出中不需要占据全屏，只保留其内容结构 */
+  .notebook-panel, .notebook-panel-overlay {
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    .c2f-export-page {
+      padding: 24px 20px;
+    }
+    .exported-message--user .message-content,
+    .exported-message--user .ds-markdown,
+    .exported-message--user .ds-message {
+      border-radius: 12px 12px 2px 12px !important;
+    }
+    .c2f-toc-container {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .c2f-toc-container {
+      right: 10px;
+      max-width: 180px;
+      padding: 12px 8px;
+    }
+  }
+</style>
+</head>
+<body>
+  <nav class="c2f-toc-container"><div class="c2f-toc-title">目录</div><ul class="c2f-toc-list"><li class="c2f-toc-item c2f-toc-item-h2">
+          <a href="#heading-0-基于相位网络理论的-PNT-TNR-数值" class="c2f-toc-link" title="基于相位网络理论的 PNT‑TNR 数值实验方案：验证固定点 Rn=nR_n = n 的存在性">基于相位网络理论的 PNT‑TNR 数值实验方案：验证固定点 Rn=nR_n = n 的存在性</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h3">
+          <a href="#heading-1-一-实验目标" class="c2f-toc-link" title="一、实验目标">一、实验目标</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h3">
+          <a href="#heading-2-二-理论基础与关键公式回顾" class="c2f-toc-link" title="二、理论基础与关键公式回顾">二、理论基础与关键公式回顾</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h3">
+          <a href="#heading-3-三-数值实验步骤" class="c2f-toc-link" title="三、数值实验步骤">三、数值实验步骤</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-4-3-1-选择模型与开源工具" class="c2f-toc-link" title="3.1 选择模型与开源工具">3.1 选择模型与开源工具</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-5-3-2-网络构建与初始张量生成" class="c2f-toc-link" title="3.2 网络构建与初始张量生成">3.2 网络构建与初始张量生成</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-6-3-3-扫描参数空间定位临界点" class="c2f-toc-link" title="3.3 扫描参数空间定位临界点">3.3 扫描参数空间定位临界点</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-7-3-4-深度粗粒化至固定点" class="c2f-toc-link" title="3.4 深度粗粒化至固定点">3.4 深度粗粒化至固定点</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-8-3-5-提取关键可观测量" class="c2f-toc-link" title="3.5 提取关键可观测量">3.5 提取关键可观测量</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-9-3-6-截断外推与误差分析" class="c2f-toc-link" title="3.6 截断外推与误差分析">3.6 截断外推与误差分析</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-10-3-7-交叉验证" class="c2f-toc-link" title="3.7 交叉验证">3.7 交叉验证</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h3">
+          <a href="#heading-11-四-可行性分析" class="c2f-toc-link" title="四、可行性分析">四、可行性分析</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-12-4-1-技术可行性" class="c2f-toc-link" title="4.1 技术可行性">4.1 技术可行性</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-13-4-2-科学可行性" class="c2f-toc-link" title="4.2 科学可行性">4.2 科学可行性</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h4">
+          <a href="#heading-14-4-3-开放代码与可重复性" class="c2f-toc-link" title="4.3 开放代码与可重复性">4.3 开放代码与可重复性</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h3">
+          <a href="#heading-15-五-实施时间表" class="c2f-toc-link" title="五、实施时间表">五、实施时间表</a>
+        </li><li class="c2f-toc-item c2f-toc-item-h3">
+          <a href="#heading-16-六-结论" class="c2f-toc-link" title="六、结论">六、结论</a>
+        </li></ul></nav>
+  <div class="c2f-export-page">
+    <div class="c2f-export-page-inner">
+      <article data-chat2file-doc="1"><div class="c2f-msg" data-c2f-role="assistant"><div class="c2f-msg-body"><div data-c2f-section="answer"><h2 id="heading-0-基于相位网络理论的-PNT-TNR-数值"><span>基于相位网络理论的 PNT‑TNR 数值实验方案：验证固定点 </span><span class="katex" data-c2f-latex="R_n = n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">R_n = n</annotation></semantics></math></span></span><span> 的存在性</span></h2><p class="ds-markdown-paragraph"><span>本方案旨在通过数值模拟，寻找相位网络理论（PNT）中满足普适校准全局关系 </span><span class="katex" data-c2f-latex="R_n = n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">R_n = n</annotation></semantics></math></span></span><span> 的固定点。该验证是 PNT 连续极限存在性定理的核心判据。我们将基于已有的自旋泡沫与张量网络重整化群（TNR）技术，利用开源工具实现可复现的数值实验。</span></p><hr><h3 id="heading-1-一-实验目标"><span>一、实验目标</span></h3><ol start="1"><li><p class="ds-markdown-paragraph"><strong><span>定位临界点</span></strong><span>：在参数空间（如耦合常数 </span><span class="katex" data-c2f-latex="\beta" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span></span><span>、截断 </span><span class="katex" data-c2f-latex="j_{\max}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow><annotation encoding="application/x-tex">j_{\max}</annotation></semantics></math></span></span><span>）中找到系统发生相变的位置 </span><span class="katex" data-c2f-latex="\beta_c" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\beta_c</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>收敛到固定点</span></strong><span>：在 </span><span class="katex" data-c2f-latex="\beta_c" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\beta_c</annotation></semantics></math></span></span><span> 处执行深度粗粒化，使边张量 </span><span class="katex" data-c2f-latex="T_e" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>e</mi></msub></mrow><annotation encoding="application/x-tex">T_e</annotation></semantics></math></span></span><span> 迭代收敛到固定点 </span><span class="katex" data-c2f-latex="T_e^*" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>T</mi><mi>e</mi><mo>∗</mo></msubsup></mrow><annotation encoding="application/x-tex">T_e^*</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>计算关键比值</span></strong><span>：在固定点处提取总几何相位 </span><span class="katex" data-c2f-latex="\Phi_g^{\text{tot}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup></mrow><annotation encoding="application/x-tex">\Phi_g^{\text{tot}}</annotation></semantics></math></span></span><span> 和总动力学相位变化率 </span><span class="katex" data-c2f-latex="|\dot{\Phi}_d^{\text{tot}}|" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><msubsup><mover accent="true"><mi mathvariant="normal">Φ</mi><mo>˙</mo></mover><mi>d</mi><mtext>tot</mtext></msubsup><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|\dot{\Phi}_d^{\text{tot}}|</annotation></semantics></math></span></span><span>，验证无量纲量 </span><span class="katex" data-c2f-latex="R_n = \frac{\Phi_g^{\text{tot}}}{|\dot{\Phi}_d^{\text{tot}}| \, t_P}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mfrac><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mrow><mi mathvariant="normal">∣</mi><msubsup><mover accent="true"><mi mathvariant="normal">Φ</mi><mo>˙</mo></mover><mi>d</mi><mtext>tot</mtext></msubsup><mi mathvariant="normal">∣</mi><mtext> </mtext><msub><mi>t</mi><mi>P</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">R_n = \frac{\Phi_g^{\text{tot}}}{|\dot{\Phi}_d^{\text{tot}}| \, t_P}</annotation></semantics></math></span></span><span> 是否为整数 </span><span class="katex" data-c2f-latex="n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span></span><span>（在数值误差范围内）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>外推至连续极限</span></strong><span>：通过改变截断 </span><span class="katex" data-c2f-latex="j_{\max}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow><annotation encoding="application/x-tex">j_{\max}</annotation></semantics></math></span></span><span>，外推至 </span><span class="katex" data-c2f-latex="j_{\max} \to \infty" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>→</mo><mi mathvariant="normal">∞</mi></mrow><annotation encoding="application/x-tex">j_{\max} \to \infty</annotation></semantics></math></span></span><span>，确认整数量子化的稳定性。</span></p></li></ol><hr><h3 id="heading-2-二-理论基础与关键公式回顾"><span>二、理论基础与关键公式回顾</span></h3><ul><li><p class="ds-markdown-paragraph"><strong><span>普朗克时间</span></strong><span>：</span><span class="katex" data-c2f-latex="t_P = \frac{\hbar}{m_P c^2} = \sqrt{\frac{\hbar G}{c^5}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>P</mi></msub><mo>=</mo><mfrac><mi mathvariant="normal">ℏ</mi><mrow><msub><mi>m</mi><mi>P</mi></msub><msup><mi>c</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><msqrt><mfrac><mrow><mi mathvariant="normal">ℏ</mi><mi>G</mi></mrow><msup><mi>c</mi><mn>5</mn></msup></mfrac></msqrt></mrow><annotation encoding="application/x-tex">t_P = \frac{\hbar}{m_P c^2} = \sqrt{\frac{\hbar G}{c^5}}</annotation></semantics></math></span></span><span>（数值模拟中常取 </span><span class="katex" data-c2f-latex="\hbar = c = G = 1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">ℏ</mi><mo>=</mo><mi>c</mi><mo>=</mo><mi>G</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\hbar = c = G = 1</annotation></semantics></math></span></span><span>，此时 </span><span class="katex" data-c2f-latex="t_P = 1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>P</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t_P = 1</annotation></semantics></math></span></span><span>，</span><span class="katex" data-c2f-latex="m_P = 1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mi>P</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m_P = 1</annotation></semantics></math></span></span><span>）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>总几何相位</span></strong><span>：对闭合曲面 </span><span class="katex" data-c2f-latex="\partial \Sigma" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\partial \Sigma</annotation></semantics></math></span></span><span>，</span><span class="katex" data-c2f-latex="\Phi_g^{\text{tot}} = \oint_{\partial \Sigma} d\Phi_{\text{geom}} = \arg \operatorname{Tr} \mathcal{P} \prod_{e \in \partial \Sigma} U_e" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mo>=</mo><msub><mo>∮</mo><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="normal">Σ</mi></mrow></msub><mi>d</mi><msub><mi mathvariant="normal">Φ</mi><mtext>geom</mtext></msub><mo>=</mo><mi>arg</mi><mo>⁡</mo><mi mathvariant="normal">Tr</mi><mo>⁡</mo><mi mathvariant="script">P</mi><msub><mo>∏</mo><mrow><mi>e</mi><mo>∈</mo><mi mathvariant="normal">∂</mi><mi mathvariant="normal">Σ</mi></mrow></msub><msub><mi>U</mi><mi>e</mi></msub></mrow><annotation encoding="application/x-tex">\Phi_g^{\text{tot}} = \oint_{\partial \Sigma} d\Phi_{\text{geom}} = \arg \operatorname{Tr} \mathcal{P} \prod_{e \in \partial \Sigma} U_e</annotation></semantics></math></span></span><span>（威尔逊圈）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>总动力学相位变化率</span></strong><span>：</span><span class="katex" data-c2f-latex="|\dot{\Phi}_d^{\text{tot}}| = \frac{M_{\text{total}} c^2}{\hbar}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∣</mi><msubsup><mover accent="true"><mi mathvariant="normal">Φ</mi><mo>˙</mo></mover><mi>d</mi><mtext>tot</mtext></msubsup><mi mathvariant="normal">∣</mi><mo>=</mo><mfrac><mrow><msub><mi>M</mi><mtext>total</mtext></msub><msup><mi>c</mi><mn>2</mn></msup></mrow><mi mathvariant="normal">ℏ</mi></mfrac></mrow><annotation encoding="application/x-tex">|\dot{\Phi}_d^{\text{tot}}| = \frac{M_{\text{total}} c^2}{\hbar}</annotation></semantics></math></span></span><span>，其中 </span><span class="katex" data-c2f-latex="M_{\text{total}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mtext>total</mtext></msub></mrow><annotation encoding="application/x-tex">M_{\text{total}}</annotation></semantics></math></span></span><span> 是曲面所围区域的总质量（可从局域能量密度积分得到）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>无量纲比值</span></strong><span>：</span><span class="katex" data-c2f-latex="R_n = \frac{\Phi_g^{\text{tot}}}{|\dot{\Phi}_d^{\text{tot}}| \, t_P}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mfrac><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mrow><mi mathvariant="normal">∣</mi><msubsup><mover accent="true"><mi mathvariant="normal">Φ</mi><mo>˙</mo></mover><mi>d</mi><mtext>tot</mtext></msubsup><mi mathvariant="normal">∣</mi><mtext> </mtext><msub><mi>t</mi><mi>P</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">R_n = \frac{\Phi_g^{\text{tot}}}{|\dot{\Phi}_d^{\text{tot}}| \, t_P}</annotation></semantics></math></span></span><span>。在固定点处应满足 </span><span class="katex" data-c2f-latex="R_n = n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">R_n = n</annotation></semantics></math></span></span><span>（整数）。</span></p></li></ul><hr><h3 id="heading-3-三-数值实验步骤"><span>三、数值实验步骤</span></h3><h4 id="heading-4-3-1-选择模型与开源工具"><span>3.1 选择模型与开源工具</span></h4><ul><li><p class="ds-markdown-paragraph"><strong><span>模型</span></strong><span>：优先采用 </span><strong><span>2+1 维 SU(2)_k 量子群自旋网</span></strong><span>（对应阶段II），因其已在 Dittrich 等人工作中被证明存在丰富的固定点结构，且计算复杂度较低。也可逐步升级至 4D 超立方体模型（阶段III）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>开源工具</span></strong><span>：</span></p><ul><li><p class="ds-markdown-paragraph"><strong><span>sl2cfoam-next</span></strong><span>：C++ 库，高效计算 SU(2) 和 SU_q(2) 的 6j/15j 符号，用于顶点振幅和边张量的生成。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>TensorNetwork</span></strong><span>（Python）或 </span><strong><span>iTensor</span></strong><span>（C++）：通用张量网络库，用于实现保高斯约束的 TNR 算法。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>Eigen / LAPACK</span></strong><span>：用于 SVD 和线性代数运算。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>自定义 Python 脚本</span></strong><span>：用于参数扫描、数据分析与可视化。</span></p></li></ul></li></ul><h4 id="heading-5-3-2-网络构建与初始张量生成"><span>3.2 网络构建与初始张量生成</span></h4><ol start="1"><li><p class="ds-markdown-paragraph"><strong><span>选择复形</span></strong><span>：对 2+1 维，采用三角剖分或六边形格点；对 4 维，采用超立方体对偶复形（如 </span><span class="katex" data-c2f-latex="2^4" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">2^4</annotation></semantics></math></span></span><span> 晶格）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>预计算边张量 </span><span class="katex" data-c2f-latex="T_e" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>e</mi></msub></mrow><annotation encoding="application/x-tex">T_e</annotation></semantics></math></span></span></strong><span>：</span></p><ul><li><p class="ds-markdown-paragraph"><span>对于 SU(2) 情形，</span><span class="katex" data-c2f-latex="T_e(j_1,j_2,j_3,j_4) = \sum_x (2x+1) \begin{Bmatrix} j_1 &amp; j_2 &amp; x \\ j_4 &amp; j_3 &amp; 0 \end{Bmatrix} \begin{Bmatrix} x &amp; j_3 &amp; j_4 \\ j_2 &amp; j_1 &amp; 0 \end{Bmatrix}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>e</mi></msub><mo stretchy="false">(</mo><msub><mi>j</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>j</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>j</mi><mn>3</mn></msub><mo separator="true">,</mo><msub><mi>j</mi><mn>4</mn></msub><mo stretchy="false">)</mo><mo>=</mo><msub><mo>∑</mo><mi>x</mi></msub><mo stretchy="false">(</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.16em" columnalign="center center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>1</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>2</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>x</mi></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>4</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>3</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd></mtr></mtable><mo fence="true">}</mo></mrow><mrow><mo fence="true">{</mo><mtable rowspacing="0.16em" columnalign="center center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>x</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>3</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>4</mn></msub></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>2</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><msub><mi>j</mi><mn>1</mn></msub></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd></mtr></mtable><mo fence="true">}</mo></mrow></mrow><annotation encoding="application/x-tex">T_e(j_1,j_2,j_3,j_4) = \sum_x (2x+1) \begin{Bmatrix} j_1 &amp; j_2 &amp; x \\ j_4 &amp; j_3 &amp; 0 \end{Bmatrix} \begin{Bmatrix} x &amp; j_3 &amp; j_4 \\ j_2 &amp; j_1 &amp; 0 \end{Bmatrix}</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><span>对于 SU_q(2) 情形，将 6j 符号替换为量子 6j 符号，并截断至 </span><span class="katex" data-c2f-latex="j_{\max} = (k-2)/2" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>=</mo><mo stretchy="false">(</mo><mi>k</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">j_{\max} = (k-2)/2</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><span>利用 </span><code>sl2cfoam-next</code><span> 批量计算所有需要的 6j 符号，存储为字典供调用。</span></p></li></ul></li><li><p class="ds-markdown-paragraph"><strong><span>顶点振幅 </span><span class="katex" data-c2f-latex="A_v" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>v</mi></msub></mrow><annotation encoding="application/x-tex">A_v</annotation></semantics></math></span></span></strong><span>：对于 4D，需预计算 15j 符号（同样借助 </span><code>sl2cfoam-next</code><span>）。</span></p></li></ol><h4 id="heading-6-3-3-扫描参数空间定位临界点"><span>3.3 扫描参数空间定位临界点</span></h4><p class="ds-markdown-paragraph"><span>采用本征微观态重整化群方法，通过不同系统尺寸下的张量网络收缩来定位相变点。</span></p><ol start="1"><li><p class="ds-markdown-paragraph"><strong><span>固定截断</span></strong><span> </span><span class="katex" data-c2f-latex="j_{\max}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow><annotation encoding="application/x-tex">j_{\max}</annotation></semantics></math></span></span><span>（例如 </span><span class="katex" data-c2f-latex="j_{\max}=5,7,9,\dots" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>=</mo><mn>5</mn><mo separator="true">,</mo><mn>7</mn><mo separator="true">,</mo><mn>9</mn><mo separator="true">,</mo><mo>…</mo></mrow><annotation encoding="application/x-tex">j_{\max}=5,7,9,\dots</annotation></semantics></math></span></span><span>）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>选取系统尺寸</span></strong><span> </span><span class="katex" data-c2f-latex="L" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span></span><span>（如 </span><span class="katex" data-c2f-latex="L=8,16,32" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mn>8</mn><mo separator="true">,</mo><mn>16</mn><mo separator="true">,</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">L=8,16,32</annotation></semantics></math></span></span><span> 的晶格）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>对每个 </span><span class="katex" data-c2f-latex="\beta" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span></span></strong><span>（扫描范围根据经验设定，例如 </span><span class="katex" data-c2f-latex="0.1 \le \beta \le 10" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1</mn><mo>≤</mo><mi>β</mi><mo>≤</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">0.1 \le \beta \le 10</annotation></semantics></math></span></span><span>，步长 </span><span class="katex" data-c2f-latex="0.02" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.02</mn></mrow><annotation encoding="application/x-tex">0.02</annotation></semantics></math></span></span><span>）：</span></p><ul><li><p class="ds-markdown-paragraph"><span>构建张量网络。</span></p></li><li><p class="ds-markdown-paragraph"><span>执行粗粒化至不同深度 </span><span class="katex" data-c2f-latex="b" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span></span><span>，得到不同有效尺度下的边张量。</span></p></li><li><p class="ds-markdown-paragraph"><span>计算可观测 </span><span class="katex" data-c2f-latex="R(\beta, b) = \frac{\langle \chi_2 \rangle}{\langle \chi_1 \rangle}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo stretchy="false">(</mo><mi>β</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mo stretchy="false">⟨</mo><msub><mi>χ</mi><mn>2</mn></msub><mo stretchy="false">⟩</mo></mrow><mrow><mo stretchy="false">⟨</mo><msub><mi>χ</mi><mn>1</mn></msub><mo stretchy="false">⟩</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">R(\beta, b) = \frac{\langle \chi_2 \rangle}{\langle \chi_1 \rangle}</annotation></semantics></math></span></span><span>，其中 </span><span class="katex" data-c2f-latex="\chi_1,\chi_2" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>χ</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>χ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\chi_1,\chi_2</annotation></semantics></math></span></span><span> 是顶点张量的第一大、第二大奇异值。</span></p></li></ul></li><li><p class="ds-markdown-paragraph"><strong><span>寻找不动点</span></strong><span>：绘制 </span><span class="katex" data-c2f-latex="R(\beta, b)" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo stretchy="false">(</mo><mi>β</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">R(\beta, b)</annotation></semantics></math></span></span><span> 曲线，不同 </span><span class="katex" data-c2f-latex="b" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span></span><span> 的交点对应临界点 </span><span class="katex" data-c2f-latex="\beta_c" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\beta_c</annotation></semantics></math></span></span><span>。该点满足 </span><span class="katex" data-c2f-latex="\xi \to \infty" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ξ</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow><annotation encoding="application/x-tex">\xi \to \infty</annotation></semantics></math></span></span><span>。</span></p></li></ol><h4 id="heading-7-3-4-深度粗粒化至固定点"><span>3.4 深度粗粒化至固定点</span></h4><p class="ds-markdown-paragraph"><span>在 </span><span class="katex" data-c2f-latex="\beta_c" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\beta_c</annotation></semantics></math></span></span><span> 处，从随机初始张量开始，执行迭代粗粒化：</span></p><ol start="1"><li><p class="ds-markdown-paragraph"><strong><span>初始化</span></strong><span>：生成随机满足高斯约束的边张量 </span><span class="katex" data-c2f-latex="T_e^{(0)}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>T</mi><mi>e</mi><mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">T_e^{(0)}</annotation></semantics></math></span></span><span>（可通过投影随机张量到约束子空间）。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>粗粒化变换</span></strong><span> </span><span class="katex" data-c2f-latex="\mathcal{R}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="script">R</mi></mrow><annotation encoding="application/x-tex">\mathcal{R}</annotation></semantics></math></span></span><span>：</span></p><ul><li><p class="ds-markdown-paragraph"><span>将相邻 </span><span class="katex" data-c2f-latex="2\times2\times2\times2" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn><mo>×</mo><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2\times2\times2\times2</annotation></semantics></math></span></span><span> 块内的边张量缩并成块张量 </span><span class="katex" data-c2f-latex="T_{\text{block}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mtext>block</mtext></msub></mrow><annotation encoding="application/x-tex">T_{\text{block}}</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><span>对 </span><span class="katex" data-c2f-latex="T_{\text{block}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mtext>block</mtext></msub></mrow><annotation encoding="application/x-tex">T_{\text{block}}</annotation></semantics></math></span></span><span> 进行 SVD，保留最大 </span><span class="katex" data-c2f-latex="D" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span></span><span> 个奇异值（</span><span class="katex" data-c2f-latex="D" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span></span><span> 需根据截断 </span><span class="katex" data-c2f-latex="j_{\max}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow><annotation encoding="application/x-tex">j_{\max}</annotation></semantics></math></span></span><span> 调整，例如 </span><span class="katex" data-c2f-latex="D = (j_{\max}+1)^2" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>+</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">D = (j_{\max}+1)^2</annotation></semantics></math></span></span><span>）。</span></p></li><li><p class="ds-markdown-paragraph"><span>投影到高斯约束子空间（利用 6j 符号的正交关系）。</span></p></li><li><p class="ds-markdown-paragraph"><span>输出新的边张量 </span><span class="katex" data-c2f-latex="T_e^{(b+1)}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>T</mi><mi>e</mi><mrow><mo stretchy="false">(</mo><mi>b</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></msubsup></mrow><annotation encoding="application/x-tex">T_e^{(b+1)}</annotation></semantics></math></span></span><span>。</span></p></li></ul></li><li><p class="ds-markdown-paragraph"><strong><span>迭代</span></strong><span>：重复步骤 2，直到 </span><span class="katex" data-c2f-latex="\|T_e^{(b+1)} - T_e^{(b)}\|_{\text{HS}} &lt; \epsilon" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∥</mi><msubsup><mi>T</mi><mi>e</mi><mrow><mo stretchy="false">(</mo><mi>b</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></msubsup><mo>−</mo><msubsup><mi>T</mi><mi>e</mi><mrow><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow></msubsup><msub><mi mathvariant="normal">∥</mi><mtext>HS</mtext></msub><mo>&lt;</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\|T_e^{(b+1)} - T_e^{(b)}\|_{\text{HS}} &lt; \epsilon</annotation></semantics></math></span></span><span>（例如 </span><span class="katex" data-c2f-latex="\epsilon = 10^{-8}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi><mo>=</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>8</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\epsilon = 10^{-8}</annotation></semantics></math></span></span><span>），认为收敛到固定点 </span><span class="katex" data-c2f-latex="T_e^*" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>T</mi><mi>e</mi><mo>∗</mo></msubsup></mrow><annotation encoding="application/x-tex">T_e^*</annotation></semantics></math></span></span><span>。</span></p></li></ol><h4 id="heading-8-3-5-提取关键可观测量"><span>3.5 提取关键可观测量</span></h4><p class="ds-markdown-paragraph"><span>在固定点处，对网络中的一个代表性闭合曲面 </span><span class="katex" data-c2f-latex="\partial \Sigma" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\partial \Sigma</annotation></semantics></math></span></span><span>（如最小晶格单元的表面）计算：</span></p><ol start="1"><li><p class="ds-markdown-paragraph"><strong><span>总几何相位</span></strong><span> </span><span class="katex" data-c2f-latex="\Phi_g^{\text{tot}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup></mrow><annotation encoding="application/x-tex">\Phi_g^{\text{tot}}</annotation></semantics></math></span></span><span>：</span></p><ul><li><p class="ds-markdown-paragraph"><span>沿 </span><span class="katex" data-c2f-latex="\partial \Sigma" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="normal">Σ</mi></mrow><annotation encoding="application/x-tex">\partial \Sigma</annotation></semantics></math></span></span><span> 的所有边顺序取群元素（需从边张量重构群元）。重构方法：由于边张量 </span><span class="katex" data-c2f-latex="T_e" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>e</mi></msub></mrow><annotation encoding="application/x-tex">T_e</annotation></semantics></math></span></span><span> 本身不是群元，但可通过其奇异值分解提取最大奇异值对应的“平均”群元，或利用特征标展开反解。</span></p></li><li><p class="ds-markdown-paragraph"><span>计算路径有序积 </span><span class="katex" data-c2f-latex="U_{\text{loop}} = \mathcal{P} \prod_{e \in \partial \Sigma} U_e" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>U</mi><mtext>loop</mtext></msub><mo>=</mo><mi mathvariant="script">P</mi><msub><mo>∏</mo><mrow><mi>e</mi><mo>∈</mo><mi mathvariant="normal">∂</mi><mi mathvariant="normal">Σ</mi></mrow></msub><msub><mi>U</mi><mi>e</mi></msub></mrow><annotation encoding="application/x-tex">U_{\text{loop}} = \mathcal{P} \prod_{e \in \partial \Sigma} U_e</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><span>取迹并求幅角：</span><span class="katex" data-c2f-latex="\Phi_g^{\text{tot}} = \arg \operatorname{Tr} U_{\text{loop}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mo>=</mo><mi>arg</mi><mo>⁡</mo><mi mathvariant="normal">Tr</mi><mo>⁡</mo><msub><mi>U</mi><mtext>loop</mtext></msub></mrow><annotation encoding="application/x-tex">\Phi_g^{\text{tot}} = \arg \operatorname{Tr} U_{\text{loop}}</annotation></semantics></math></span></span><span>（模 </span><span class="katex" data-c2f-latex="2\pi" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">2\pi</annotation></semantics></math></span></span><span>，通常取主值在 </span><span class="katex" data-c2f-latex="(-\pi,\pi]" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mo>−</mo><mi>π</mi><mo separator="true">,</mo><mi>π</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">(-\pi,\pi]</annotation></semantics></math></span></span><span>）。</span></p></li></ul></li><li><p class="ds-markdown-paragraph"><strong><span>总质量</span></strong><span> </span><span class="katex" data-c2f-latex="M_{\text{total}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mtext>total</mtext></msub></mrow><annotation encoding="application/x-tex">M_{\text{total}}</annotation></semantics></math></span></span><span>：</span></p><ul><li><p class="ds-markdown-paragraph"><span>从顶点动力学相位变化率导出质量密度。在连续极限下，质量密度与局域能量有关。在离散网络中，可近似为曲面内所有顶点质量之和。每个顶点的质量 </span><span class="katex" data-c2f-latex="m_v" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mi>v</mi></msub></mrow><annotation encoding="application/x-tex">m_v</annotation></semantics></math></span></span><span> 可由其邻边张量的动力学相位变化率估算，或通过求解局部特征值得到（较复杂）。替代方案：利用普适校准关系的积分形式，直接从总几何相位和粗粒化参数反推质量。但更直接的是采用“质量算子”：</span></p><ul><li><p class="ds-markdown-paragraph"><span>在固定点处，系统的哈密顿量（或转移矩阵）的特征值给出了总能量。通过求解转移矩阵的最大特征值 </span><span class="katex" data-c2f-latex="\lambda_0" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\lambda_0</annotation></semantics></math></span></span><span>，可得到总能量 </span><span class="katex" data-c2f-latex="E = -\hbar \ln \lambda_0 / \Delta t" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo>=</mo><mo>−</mo><mi mathvariant="normal">ℏ</mi><mi>ln</mi><mo>⁡</mo><msub><mi>λ</mi><mn>0</mn></msub><mi mathvariant="normal">/</mi><mi mathvariant="normal">Δ</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">E = -\hbar \ln \lambda_0 / \Delta t</annotation></semantics></math></span></span><span>，从而 </span><span class="katex" data-c2f-latex="M_{\text{total}} = E/c^2" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mtext>total</mtext></msub><mo>=</mo><mi>E</mi><mi mathvariant="normal">/</mi><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">M_{\text{total}} = E/c^2</annotation></semantics></math></span></span><span>。</span></p></li><li><p class="ds-markdown-paragraph"><span>在欧几里得路径积分中，配分函数 </span><span class="katex" data-c2f-latex="Z" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics></math></span></span><span> 与能量有关，但直接计算有限体积的 </span><span class="katex" data-c2f-latex="Z" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics></math></span></span><span> 较困难。通常通过威尔逊圈的面积律或关联长度来反推。</span></p></li></ul></li><li><p class="ds-markdown-paragraph"><span>鉴于数值复杂性，一个实用方法是：在粗粒化过程中，同时计算块内所有顶点的动力学相位变化率之和（需定义动力学相位在顶点上的分布）。这需要额外的假设，但可在简化模型中先行测试。</span></p></li></ul></li><li><p class="ds-markdown-paragraph"><strong><span>计算比值</span></strong><span>：</span></p><span class="katex-display ds-markdown-math" data-c2f-latex="R_{\text{num}} = \frac{\Phi_g^{\text{tot}}}{(M_{\text{total}} c^2/\hbar) \cdot t_P} = \frac{\Phi_g^{\text{tot}}}{M_{\text{total}} t_P \cdot (c^2/\hbar)}." data-c2f-math="display"><span class="katex" data-c2f-latex="R_{\text{num}} = \frac{\Phi_g^{\text{tot}}}{(M_{\text{total}} c^2/\hbar) \cdot t_P} = \frac{\Phi_g^{\text{tot}}}{M_{\text{total}} t_P \cdot (c^2/\hbar)}." data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>R</mi><mtext>num</mtext></msub><mo>=</mo><mfrac><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mrow><mo stretchy="false">(</mo><msub><mi>M</mi><mtext>total</mtext></msub><msup><mi>c</mi><mn>2</mn></msup><mi mathvariant="normal">/</mi><mi mathvariant="normal">ℏ</mi><mo stretchy="false">)</mo><mo>⋅</mo><msub><mi>t</mi><mi>P</mi></msub></mrow></mfrac><mo>=</mo><mfrac><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mrow><msub><mi>M</mi><mtext>total</mtext></msub><msub><mi>t</mi><mi>P</mi></msub><mo>⋅</mo><mo stretchy="false">(</mo><msup><mi>c</mi><mn>2</mn></msup><mi mathvariant="normal">/</mi><mi mathvariant="normal">ℏ</mi><mo stretchy="false">)</mo></mrow></mfrac><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">R_{\text{num}} = \frac{\Phi_g^{\text{tot}}}{(M_{\text{total}} c^2/\hbar) \cdot t_P} = \frac{\Phi_g^{\text{tot}}}{M_{\text{total}} t_P \cdot (c^2/\hbar)}.</annotation></semantics></math></span></span></span><p class="ds-markdown-paragraph"><span>在自然单位制（</span><span class="katex" data-c2f-latex="\hbar=c=1, G=1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">ℏ</mi><mo>=</mo><mi>c</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mi>G</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\hbar=c=1, G=1</annotation></semantics></math></span></span><span>）下，</span><span class="katex" data-c2f-latex="t_P = 1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>P</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t_P = 1</annotation></semantics></math></span></span><span>，</span><span class="katex" data-c2f-latex="m_P = 1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>m</mi><mi>P</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m_P = 1</annotation></semantics></math></span></span><span>，则 </span><span class="katex" data-c2f-latex="R_{\text{num}} = \Phi_g^{\text{tot}} / M_{\text{total}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mtext>num</mtext></msub><mo>=</mo><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup><mi mathvariant="normal">/</mi><msub><mi>M</mi><mtext>total</mtext></msub></mrow><annotation encoding="application/x-tex">R_{\text{num}} = \Phi_g^{\text{tot}} / M_{\text{total}}</annotation></semantics></math></span></span><span>。需验证其是否为整数 </span><span class="katex" data-c2f-latex="n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span></span><span>。</span></p></li></ol><h4 id="heading-9-3-6-截断外推与误差分析"><span>3.6 截断外推与误差分析</span></h4><p class="ds-markdown-paragraph"><span>对多个截断 </span><span class="katex" data-c2f-latex="j_{\max} = 5,7,9,\dots" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>=</mo><mn>5</mn><mo separator="true">,</mo><mn>7</mn><mo separator="true">,</mo><mn>9</mn><mo separator="true">,</mo><mo>…</mo></mrow><annotation encoding="application/x-tex">j_{\max} = 5,7,9,\dots</annotation></semantics></math></span></span><span> 重复上述过程，得到 </span><span class="katex" data-c2f-latex="R_{\text{num}}(j_{\max})" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mtext>num</mtext></msub><mo stretchy="false">(</mo><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">R_{\text{num}}(j_{\max})</annotation></semantics></math></span></span><span>。预期其随 </span><span class="katex" data-c2f-latex="j_{\max}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow><annotation encoding="application/x-tex">j_{\max}</annotation></semantics></math></span></span><span> 增大而趋于某个整数 </span><span class="katex" data-c2f-latex="n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span></span><span>。采用有限尺度标度拟合：</span></p><span class="katex-display ds-markdown-math" data-c2f-latex="R_{\text{num}}(j_{\max}) = n + A e^{-\alpha j_{\max}} + B j_{\max}^{-\Delta} + \cdots," data-c2f-math="display"><span class="katex" data-c2f-latex="R_{\text{num}}(j_{\max}) = n + A e^{-\alpha j_{\max}} + B j_{\max}^{-\Delta} + \cdots," data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>R</mi><mtext>num</mtext></msub><mo stretchy="false">(</mo><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo stretchy="false">)</mo><mo>=</mo><mi>n</mi><mo>+</mo><mi>A</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>α</mi><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow></msup><mo>+</mo><mi>B</mi><msubsup><mi>j</mi><mi>max</mi><mo>⁡</mo><mrow><mo>−</mo><mi mathvariant="normal">Δ</mi></mrow></msubsup><mo>+</mo><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">R_{\text{num}}(j_{\max}) = n + A e^{-\alpha j_{\max}} + B j_{\max}^{-\Delta} + \cdots,</annotation></semantics></math></span></span></span><p class="ds-markdown-paragraph"><span>外推至 </span><span class="katex" data-c2f-latex="j_{\max} \to \infty" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>→</mo><mi mathvariant="normal">∞</mi></mrow><annotation encoding="application/x-tex">j_{\max} \to \infty</annotation></semantics></math></span></span><span>。检查外推值是否稳定，且与整数 </span><span class="katex" data-c2f-latex="n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span></span><span> 的偏差小于统计误差（如 </span><span class="katex" data-c2f-latex="10^{-3}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mo>−</mo><mn>3</mn></mrow></msup></mrow><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math></span></span><span>）。</span></p><h4 id="heading-10-3-7-交叉验证"><span>3.7 交叉验证</span></h4><ul><li><p class="ds-markdown-paragraph"><span>对不同大小的闭合曲面（如 </span><span class="katex" data-c2f-latex="2\times2" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2\times2</annotation></semantics></math></span></span><span> 块、</span><span class="katex" data-c2f-latex="4\times4" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>×</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">4\times4</annotation></semantics></math></span></span><span> 块）重复上述计算，所得 </span><span class="katex" data-c2f-latex="R_n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">R_n</annotation></semantics></math></span></span><span> 应一致。</span></p></li><li><p class="ds-markdown-paragraph"><span>对不同初始随机种子重复，确认收敛值的唯一性。</span></p></li><li><p class="ds-markdown-paragraph"><span>与已知 Dittrich 等人的固定点分类进行比对，确认不同整数 </span><span class="katex" data-c2f-latex="n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span></span><span> 对应不同普适类。</span></p></li></ul><hr><h3 id="heading-11-四-可行性分析"><span>四、可行性分析</span></h3><h4 id="heading-12-4-1-技术可行性"><span>4.1 技术可行性</span></h4><ul><li><p class="ds-markdown-paragraph"><strong><span>张量网络 TNR 算法</span></strong><span>：保高斯约束 TNR 已在非阿贝尔群上实现（Dittrich 等人），代码可参考其已发表工作的附录或开源项目。我们可基于 </span><code>iTensor</code><span> 或 </span><code>TensorNetwork</code><span> 自行实现。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>6j 符号计算</span></strong><span>：</span><code>sl2cfoam-next</code><span> 已成熟，能高效计算 SU(2) 和 SU_q(2) 的 6j/15j 符号，支持任意半整数自旋和量子群参数 </span><span class="katex" data-c2f-latex="k" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span></span><span>。其 C++ 接口可嵌入到我们的程序中。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>数值精度</span></strong><span>：现代计算机对双精度浮点数的 SVD 和矩阵运算支持良好，误差可控。关键奇异值的收敛性可通过自适应截断保证。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>计算资源</span></strong><span>：阶段II（2+1维 SU(2)_k）对中等规模晶格（如 </span><span class="katex" data-c2f-latex="32^3" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>32</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">32^3</annotation></semantics></math></span></span><span>）的 TNR 迭代，可在单台多核服务器（如 64核、256GB内存）上运行，时间约数天至数周。阶段III（4D）需超算支持，但初期可从小规模（如 </span><span class="katex" data-c2f-latex="4^4" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>4</mn><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">4^4</annotation></semantics></math></span></span><span>）开始验证原理。</span></p></li></ul><h4 id="heading-13-4-2-科学可行性"><span>4.2 科学可行性</span></h4><ul><li><p class="ds-markdown-paragraph"><strong><span>已有数值证据</span></strong><span>：Dittrich 等人已在 SU(2)_k 量子群自旋网中发现大量非平庸固定点，并验证了其扩展相区。这为我们寻找固定点提供了坚实基础。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>普适校准的预期</span></strong><span>：根据我们的理论推导，满足 </span><span class="katex" data-c2f-latex="R_n = n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">R_n = n</annotation></semantics></math></span></span><span> 的固定点正是这些非平庸固定点中的一部分，且整数 </span><span class="katex" data-c2f-latex="n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span></span><span> 可能对应于不同的拓扑荷。这为数值验证提供了明确目标。</span></p></li><li><p class="ds-markdown-paragraph"><strong><span>潜在风险</span></strong><span>：</span></p><ul><li><p class="ds-markdown-paragraph"><span>从边张量提取群元 </span><span class="katex" data-c2f-latex="U_e" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>U</mi><mi>e</mi></msub></mrow><annotation encoding="application/x-tex">U_e</annotation></semantics></math></span></span><span> 可能涉及逆问题，存在多值性。可改用威尔逊圈的期望值代替直接计算，因为 </span><span class="katex" data-c2f-latex="\langle W_\gamma \rangle" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">⟨</mo><msub><mi>W</mi><mi>γ</mi></msub><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">\langle W_\gamma \rangle</annotation></semantics></math></span></span><span> 在固定点处也应与 </span><span class="katex" data-c2f-latex="\Phi_g^{\text{tot}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup></mrow><annotation encoding="application/x-tex">\Phi_g^{\text{tot}}</annotation></semantics></math></span></span><span> 相关。</span></p></li><li><p class="ds-markdown-paragraph"><span>质量 </span><span class="katex" data-c2f-latex="M_{\text{total}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mtext>total</mtext></msub></mrow><annotation encoding="application/x-tex">M_{\text{total}}</annotation></semantics></math></span></span><span> 的提取较复杂，尤其在离散网络中缺乏直接定义。替代方案：利用能量-动量张量的期望值，通过转移矩阵的最大特征值得到总能量，再求质量。这需要构建系统的哈密顿量，但自旋泡沫模型的哈密顿形式尚不完善。可先在小规模系统中试探性采用简单近似，如认为每个顶点质量相等且与局域几何相位梯度有关。</span></p></li><li><p class="ds-markdown-paragraph"><span>量子群形变下，自旋截断 </span><span class="katex" data-c2f-latex="j_{\max}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub></mrow><annotation encoding="application/x-tex">j_{\max}</annotation></semantics></math></span></span><span> 有限，外推需要小心处理。</span></p></li></ul></li></ul><h4 id="heading-14-4-3-开放代码与可重复性"><span>4.3 开放代码与可重复性</span></h4><p class="ds-markdown-paragraph"><span>我们计划将所有代码开源，包括：</span></p><ul><li><p class="ds-markdown-paragraph"><span>基于 </span><code>sl2cfoam-next</code><span> 的 6j 符号预计算模块。</span></p></li><li><p class="ds-markdown-paragraph"><span>TNR 主循环（C++/Python）。</span></p></li><li><p class="ds-markdown-paragraph"><span>数据分析脚本（Python + NumPy/SciPy）。</span></p></li><li><p class="ds-markdown-paragraph"><span>参数扫描作业提交脚本（支持 SLURM 等调度系统）。</span></p></li></ul><p class="ds-markdown-paragraph"><span>通过 GitHub 发布，并提供详细文档和示例数据，确保其他研究者可复现结果。</span></p><hr><h3 id="heading-15-五-实施时间表"><span>五、实施时间表</span></h3><div class="ds-scroll-area _1210dd7 c03cafe9"><div class="ds-scroll-area__gutters" style="position: sticky; top: 0px; left: 0px; right: 0px; height: 0px; --container-height: 464px;"><div class="ds-scroll-area__horizontal-gutter" style="left: 0px; right: 0px; display: block; top: calc(var(--container-height) - 14px); height: 10px;"><div class="ds-scroll-area__horizontal-bar" style="display: none;"></div></div><div class="ds-scroll-area__vertical-gutter" style="right: 0px; top: 8px; bottom: calc(0px - var(--container-height) + 8px); width: 10px;"><div class="ds-scroll-area__vertical-bar" style="display: none;"></div></div></div><table><thead><tr><th><span>阶段</span></th><th><span>任务</span></th><th><span>预计时间</span></th></tr></thead><tbody><tr><td><strong><span>0</span></strong></td><td><span>搭建开发环境，集成 </span><code>sl2cfoam-next</code><span> 和 </span><code>iTensor</code></td><td><span>2周</span></td></tr><tr><td><strong><span>1</span></strong></td><td><span>编写 2+1 维 SU(2)_k 边张量预计算模块，测试正确性</span></td><td><span>4周</span></td></tr><tr><td><strong><span>2</span></strong></td><td><span>实现保高斯约束 TNR 核心算法，在简单模型（如 Ising）上验证</span></td><td><span>6周</span></td></tr><tr><td><strong><span>3</span></strong></td><td><span>对 </span><span class="katex" data-c2f-latex="k=4" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">k=4</annotation></semantics></math></span></span><span>（即 </span><span class="katex" data-c2f-latex="j_{\max}=1" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>j</mi><mi>max</mi><mo>⁡</mo></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j_{\max}=1</annotation></semantics></math></span></span><span>）进行完整扫描，定位临界点，收敛固定点</span></td><td><span>8周</span></td></tr><tr><td><strong><span>4</span></strong></td><td><span>提取 </span><span class="katex" data-c2f-latex="\Phi_g^{\text{tot}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="normal">Φ</mi><mi>g</mi><mtext>tot</mtext></msubsup></mrow><annotation encoding="application/x-tex">\Phi_g^{\text{tot}}</annotation></semantics></math></span></span><span> 和 </span><span class="katex" data-c2f-latex="M_{\text{total}}" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mtext>total</mtext></msub></mrow><annotation encoding="application/x-tex">M_{\text{total}}</annotation></semantics></math></span></span><span>，计算 </span><span class="katex" data-c2f-latex="R_n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">R_n</annotation></semantics></math></span></span><span>，检验整数量子化</span></td><td><span>4周</span></td></tr><tr><td><strong><span>5</span></strong></td><td><span>对 </span><span class="katex" data-c2f-latex="k=6,10" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>6</mn><mo separator="true">,</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">k=6,10</annotation></semantics></math></span></span><span> 重复，进行截断外推</span></td><td><span>8周</span></td></tr><tr><td><strong><span>6</span></strong></td><td><span>撰写论文，发布代码</span></td><td><span>4周</span></td></tr><tr><td><strong><span>总计</span></strong></td><td><span>约 </span><strong><span>36周</span></strong><span>（9个月）</span></td><td></td></tr></tbody></table></div><hr><h3 id="heading-16-六-结论"><span>六、结论</span></h3><p class="ds-markdown-paragraph"><span>本数值实验方案基于成熟的张量网络技术和自旋泡沫库，旨在直接验证相位网络理论的核心预言：固定点处满足 </span><span class="katex" data-c2f-latex="R_n = n" data-c2f-math="inline"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>n</mi></msub><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">R_n = n</annotation></semantics></math></span></span><span>。尽管存在一些技术挑战（如质量的提取），但通过合理的近似和交叉验证，有望获得可靠结果。若成功，将首次在离散量子引力模型中获得连续极限存在的数值证据，并证实普适标度校准原理的普适性。此实验不仅是 PNT 理论的关键检验，也将为量子引力数值模拟开辟新范式。</span></p></div></div></div></article>
+    </div>
+    <div class="c2f-export-footer">
+      导出自 Chat2File-DeepSeek 浏览器扩展 · 
+      <a href="https://microsoftedge.microsoft.com/addons/detail/chat2file-deepseek-ai-%E5%AF%B9/lhpfomlihfgoafkcppfljokecljilafi" target="_blank" rel="noopener noreferrer">Edge扩展商店</a>
+      ｜
+      <a href="https://chromewebstore.google.com/detail/chat2file-deepseek-ai-%E5%AF%B9%E8%AF%9D%E5%AF%BC/pjmiifildhnfeojfbaaadilakfnajnpg" target="_blank" rel="noopener noreferrer">Chrome扩展商店</a>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const tocLinks = document.querySelectorAll('.c2f-toc-link');
+      tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            tocLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+          }
+        });
+      });
+
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateActiveLink();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      function updateActiveLink() {
+        const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+        let currentId = '';
+        headings.forEach(heading => {
+          const rect = heading.getBoundingClientRect();
+          if (rect.top <= 100) {
+            currentId = heading.id;
+          }
+        });
+
+        if (currentId) {
+          tocLinks.forEach(link => {
+            if (link.getAttribute('href') === '#' + currentId) {
+              tocLinks.forEach(l => l.classList.remove('active'));
+              link.classList.add('active');
+            }
+          });
+        }
+      }
+    })();
+
+    (function() {
+      const thinkingWrappers = document.querySelectorAll('.c2f-thinking-wrapper');
+      thinkingWrappers.forEach(wrapper => {
+        const header = wrapper.querySelector('.c2f-thinking-header');
+        if (!header) return;
+        header.addEventListener('click', function() {
+          wrapper.classList.toggle('collapsed');
+          try {
+            const thinkingStates = JSON.parse(localStorage.getItem('c2f-thinking-states') || '{}');
+            const index = Array.from(thinkingWrappers).indexOf(wrapper);
+            thinkingStates[index] = wrapper.classList.contains('collapsed');
+            localStorage.setItem('c2f-thinking-states', JSON.stringify(thinkingStates));
+          } catch (_) {}
+        });
+      });
+
+      try {
+        const thinkingStates = JSON.parse(localStorage.getItem('c2f-thinking-states') || '{}');
+        thinkingWrappers.forEach((wrapper, index) => {
+          if (thinkingStates[index]) {
+            wrapper.classList.add('collapsed');
+          }
+        });
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>
