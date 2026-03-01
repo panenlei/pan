@@ -33,7 +33,7 @@ std::complex<double> compute6j(int j1, int j2, int j3, int j4, int j5, int j6, i
   {
     std::lock_guard<std::mutex> lock(mtx6j);
     auto it = cache6j.find(key);
-    if (it != cache6j.end()) return it->second;
+    if (it != cache6j.end()) return std::complex<double>(it->second, 0.0);
   }
   double result = 0.0;
   if (k == 0) {
